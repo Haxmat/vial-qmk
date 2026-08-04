@@ -18,8 +18,6 @@
 #include <ch.h>
 #include <hal.h>
 
-#define ADC_RESOLUTION ADC_CFGR1_RES_10BIT
-
 #if !HAL_USE_ADC
 #    error "You need to set HAL_USE_ADC to TRUE in your halconf.h to use the ADC."
 #endif
