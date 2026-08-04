@@ -16,6 +16,41 @@
 
 #pragma once
 
+#define CONSOLE_ENABLED
+
+#define MATRIX_ROW_PINS \
+    { D4, C6, D7, B2 }
+#define MATRIX_ROW_PINS_RIGHT \
+    { F4, F5, F7, B3 }
+
+#define MATRIX_COL_CHANNELS \
+    { 4, 6, 2, 1, 3 }
+#define MATRIX_COL_CHANNELS_RIGHT \
+    { 2, 4, 6, 7, 5 }
+
+#define MUX_SEL_PINS \
+    { F4, F5, F7 }
+#define MUX_SEL_PINS_RIGHT \
+    { B5, B4, E6 }
+
+#define APLEX_EN_PIN B6
+#define APLEX_EN_PIN_RIGHT D4
+
+#define DISCHARGE_PIN B3
+#define DISCHARGE_PIN_RIGHT D7
+
+#define ANALOG_PORT F6
+
+#define SPLIT_HAND_PIN D2
+
+#define SPLIT_HAND_PIN_ACTIVE_LOW false
+
+#define SERIAL_USART_TX_PIN D3
+
+#define POWER_PIN B1
+#define POWER_PIN_RIGHT C6
+
+
 #define MATRIX_ROWS 8
 #define MATRIX_COLS 5
 #define EC_DEBUG true
@@ -23,7 +58,7 @@
 #define DIODE_DIRECTION COL2ROW
 
 #define DYNAMIC_KEYMAP_LAYER_COUNT 8
-#define VIAL_KEYBOARD_UID {0x64, 0x70, 0x69, 0x46, 0xB0, 0x10, 0x7F, 0xC9}
+#define VIAL_KEYBOARD_UID {0xE4, 0xAC, 0x25, 0x4A, 0x1A, 0x1A, 0xDA, 0xEE}
 
 // Calibration:
 // Baseline read - what you see in console when keyboard IDLE.

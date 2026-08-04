@@ -1,5 +1,7 @@
 #pragma once
 
+#define CONSOLE_ENABLED
+
 #define MATRIX_ROW_PINS \
     { D4, C6, D7, B2 }
 #define MATRIX_ROW_PINS_RIGHT \
