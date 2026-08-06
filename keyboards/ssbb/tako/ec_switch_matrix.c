@@ -228,3 +228,7 @@ void ecsm_print_matrix(void) {
     }
     print("\n");
 }
+
+int16_t get_ecsm_sw_value(uint8_t row, uint8_t col) {
+    return ecsm_sw_value[row][col];
+}
