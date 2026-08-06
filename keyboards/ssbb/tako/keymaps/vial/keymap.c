@@ -11,6 +11,12 @@ enum layers {
     _NUM
 };
 
+extern int16_t ecsm_sw_value[MATRIX_ROWS][MATRIX_COLS];
+
+enum custom_keycodes {
+    DUMP_EC_THRESHOLDS = USER00
+};
+
 #define KC_SLCK KC_SCROLL_LOCK
 #define KC_REDO KC_AGAIN 
 // Define Mod-Tap and Layer-Tap shortcuts for readability
@@ -66,7 +72,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_FUN] = LAYOUT(
-        KC_F12,    KC_F7,     KC_F8,     KC_F9,     KC_PSCR,   _______,   _______,   _______,   _______,   _______,
+        KC_F12,    KC_F7,     KC_F8,     KC_F9,     KC_PSCR,   DUMP_EC_THRESHOLDS,   _______,   _______,   _______,   _______,
         KC_F11,    KC_F4,     KC_F5,     KC_F6,     KC_SLCK,   _______,   KC_RSFT,   KC_LCTL,   KC_LALT,   KC_LGUI,
         KC_F10,    KC_F1,     KC_F2,     KC_F3,     KC_PAUS,   _______,   _______,   _______,   _______,   _______,
                               KC_APP,    KC_SPC,    _______,   _______
@@ -79,3 +85,55 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                               KC_DOT,    KC_0,      _______,   _______
     )
 };
+
+// Helper macro function to handle structural string formatting over USB serial console
+void print_ec_threshold_sub_matrix(const char* label, bool is_high_threshold, uint8_t start_row, uint8_t end_row) {
+    uprintf("#define %s { \\\n", label);
+    for (uint8_t r = start_row; r < end_row; r++) {
+        uprintf("    { ");
+        for (uint8_t c = 0; c < MATRIX_COLS; c++) {
+            
+            // Capture the live baseline idle ADC value from Cipulot's matrix loop
+            int16_t baseline = ecsm_sw_value[r][c];
+            int16_t final_val = baseline + 100; // Low threshold formula
+            
+            if (is_high_threshold) {
+                final_val += 300; // High threshold formula (adjust 300 here if you want a different depth)
+            }
+            
+            uprintf("%d", final_val);
+            if (c < MATRIX_COLS - 1) {
+                uprintf(", ");
+            }
+        }
+        // Format the macro trailing line continuations properly
+        if (r < end_row - 1) {
+            uprintf(" }, \\\n");
+        } else {
+            uprintf(" }  \\\n");
+        }
+    }
+    uprintf("}\n\n");
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case DUMP_EC_THRESHOLDS:
+            if (record->event.pressed) {
+                uprintf("\n\n// ====== COPY FROM HERE ======\n\n");
+                
+                // Print high thresholds (Rows 0-3 Left, Rows 4-7 Right)
+                print_ec_threshold_sub_matrix("EC_HIGH_THRESHOLD_LEFT",  true,  0, 4);
+                print_ec_threshold_sub_matrix("EC_HIGH_THRESHOLD_RIGHT", true,  4, 8);
+                
+                // Print low thresholds (Rows 0-3 Left, Rows 4-7 Right)
+                print_ec_threshold_sub_matrix("EC_LOW_THRESHOLD_LEFT",   false, 0, 4);
+                print_ec_threshold_sub_matrix("EC_LOW_THRESHOLD_RIGHT",  false, 4, 8);
+                
+                uprintf("// ====== END COPY ======\n\n");
+            }
+            return false; // Handled
+        default:
+            return true;
+    }
+}
