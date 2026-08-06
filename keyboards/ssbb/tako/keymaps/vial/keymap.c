@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "split_common/split_util.h"
 
 // Define Layer Names
 enum layers {
@@ -11,11 +12,11 @@ enum layers {
     _NUM
 };
 
-extern int16_t ecsm_sw_value[MATRIX_ROWS][MATRIX_COLS];
-
 enum custom_keycodes {
-    DUMP_EC_THRESHOLDS = USER00
+    DUMP_EC_THRESHOLDS = QK_KB_0
 };
+
+int16_t get_ecsm_sw_value(uint8_t row, uint8_t col);
 
 #define KC_SLCK KC_SCROLL_LOCK
 #define KC_REDO KC_AGAIN 
@@ -86,19 +87,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
-// Helper macro function to handle structural string formatting over USB serial console
 void print_ec_threshold_sub_matrix(const char* label, bool is_high_threshold, uint8_t start_row, uint8_t end_row) {
     uprintf("#define %s { \\\n", label);
     for (uint8_t r = start_row; r < end_row; r++) {
         uprintf("    { ");
         for (uint8_t c = 0; c < MATRIX_COLS; c++) {
             
-            // Capture the live baseline idle ADC value from Cipulot's matrix loop
-            int16_t baseline = ecsm_sw_value[r][c];
-            int16_t final_val = baseline + 100; // Low threshold formula
+            int32_t baseline_accumulator = 0;
             
+            // Loop 50 times, letting the native matrix scan fill the array naturally
+            for (uint8_t i = 0; i < 200; i++) {
+                baseline_accumulator += get_ecsm_sw_value(r, c);
+                
+                // Pause for 2ms to guarantee the background keyboard loop 
+                // has completed a full hardware scan pass and discharged the sensors
+                wait_ms(2); 
+            }
+            int16_t averaged_baseline = baseline_accumulator / 200;
+            
+            // Calculate final thresholds based on your standard formulas
+            int16_t final_val = averaged_baseline + 100; // Low threshold formula
             if (is_high_threshold) {
-                final_val += 300; // High threshold formula (adjust 300 here if you want a different depth)
+                final_val += 200; // High threshold formula
             }
             
             uprintf("%d", final_val);
@@ -106,7 +116,6 @@ void print_ec_threshold_sub_matrix(const char* label, bool is_high_threshold, ui
                 uprintf(", ");
             }
         }
-        // Format the macro trailing line continuations properly
         if (r < end_row - 1) {
             uprintf(" }, \\\n");
         } else {
@@ -120,19 +129,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case DUMP_EC_THRESHOLDS:
             if (record->event.pressed) {
-                uprintf("\n\n// ====== COPY FROM HERE ======\n\n");
+
+                uprintf("\n\n// ====== COPY FROM HERE (200x NATURALLY AVERAGED) ======\n\n");
+                if(!isLeftHand) {
+                    print_ec_threshold_sub_matrix("EC_HIGH_THRESHOLD_RIGHT",  true,  0, 4);
+                    print_ec_threshold_sub_matrix("EC_LOW_THRESHOLD_RIGHT",   false, 0, 4);
+                }
+                else {
+
                 
-                // Print high thresholds (Rows 0-3 Left, Rows 4-7 Right)
                 print_ec_threshold_sub_matrix("EC_HIGH_THRESHOLD_LEFT",  true,  0, 4);
-                print_ec_threshold_sub_matrix("EC_HIGH_THRESHOLD_RIGHT", true,  4, 8);
-                
-                // Print low thresholds (Rows 0-3 Left, Rows 4-7 Right)
                 print_ec_threshold_sub_matrix("EC_LOW_THRESHOLD_LEFT",   false, 0, 4);
-                print_ec_threshold_sub_matrix("EC_LOW_THRESHOLD_RIGHT",  false, 4, 8);
                 
+                }
                 uprintf("// ====== END COPY ======\n\n");
             }
-            return false; // Handled
+            return false;
         default:
             return true;
     }
