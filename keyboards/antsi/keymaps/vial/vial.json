@@ -1,0 +1,10 @@
+{
+    "lighting": "none",
+    "matrix": {
+        "rows": 8,
+        "cols": 5
+    },
+    "layouts": {
+        "keymap":
+    }
+}

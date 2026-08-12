@@ -17,7 +17,7 @@
     "diode_direction": "COL2ROW",
     "debounce": 5,
     "features": {
-        "swap_hands": true
+        "swap_hands": false
     },
     "split": {
         "enabled": true,
