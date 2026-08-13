@@ -26,6 +26,7 @@
 #define ANALOG_PORT F6
 
 #define SPLIT_HAND_PIN D2
+
 #define SERIAL_USART_TX_PIN D3
 
 #define POWER_PIN B1

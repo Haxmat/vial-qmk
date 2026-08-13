@@ -24,6 +24,7 @@
 #include "split_common/split_util.h"
 #include "ec_analog.h"
 
+
 #if defined(MCU_RP)
 #    include "hardware/gpio.h"
 #endif
@@ -227,4 +228,8 @@ void ecsm_print_matrix(void) {
         print("\n");
     }
     print("\n");
+}
+
+int16_t get_ecsm_sw_value(uint8_t row, uint8_t col) {
+    return ecsm_sw_value[row][col];
 }
