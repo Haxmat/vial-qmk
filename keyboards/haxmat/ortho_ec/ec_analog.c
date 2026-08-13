@@ -18,6 +18,8 @@
 #include <ch.h>
 #include <hal.h>
 
+#define ADC_SAMPLING_RATE ADC_SMPR_SMP_239P5
+
 #if !HAL_USE_ADC
 #    error "You need to set HAL_USE_ADC to TRUE in your halconf.h to use the ADC."
 #endif
@@ -68,9 +70,7 @@
 // we still sample at 12bit, but scale down to the requested bit range
 #    define ADC_CFGR1_RES_12BIT 12
 #    define ADC_CFGR1_RES_10BIT 10
-#    define ADC_CFGR1_RES_9BIT 9
 #    define ADC_CFGR1_RES_8BIT 8
-#    define ADC_CFGR1_RES_7BIT 7
 #    define ADC_CFGR1_RES_6BIT 6
 #endif
 
