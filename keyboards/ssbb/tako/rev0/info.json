@@ -7,6 +7,7 @@
     "build": {
         "lto": true
     },
+    "compatible": "stemcell",
     "features": {
         "audio": false,
         "backlight": false,
