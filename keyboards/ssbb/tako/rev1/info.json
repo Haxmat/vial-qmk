@@ -5,7 +5,7 @@
     "build": {
         "lto": true
     },
-    "pin_compatible": "promicro",
+    "bootloader":"stm32-dfu",
     "features": {
         "audio": false,
         "backlight": false,

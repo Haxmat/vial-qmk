@@ -2,12 +2,10 @@
 
 #include_next <mcuconf.h>
 
-#if defined(MCU_RP)
-#    undef RP_ADC_USE_ADC1
-#    define RP_ADC_USE_ADC1 TRUE
-#endif
-
-#if defined(MCU_STM32)
 #undef STM32_ADC_USE_ADC1
 #define STM32_ADC_USE_ADC1 TRUE
-#endif
+
+#undef STM32_SERIAL_USE_USART2
+#define STM32_SERIAL_USE_USART2 TRUE
+
+

@@ -3,9 +3,9 @@
 #define CONSOLE_ENABLED
 
 #define MATRIX_ROW_PINS \
-    { D4, C6, D7, B2 }
+    { A15, B3, B4, A7 }
 #define MATRIX_ROW_PINS_RIGHT \
-    { F4, F5, F7, B3 }
+    { B10, B2, B0, A6 }
 
 #define MATRIX_COL_CHANNELS \
     { 4, 6, 2, 1, 3 }
@@ -13,20 +13,25 @@
     { 2, 4, 6, 7, 5 }
 
 #define MUX_SEL_PINS \
-    { F4, F5, F7 }
+    { B10, B2, B0 }
 #define MUX_SEL_PINS_RIGHT \
-    { B5, B4, E6 }
+    { B9, B8, B5 }
 
-#define APLEX_EN_PIN B6
-#define APLEX_EN_PIN_RIGHT D4
+#define APLEX_EN_PIN A4
+#define APLEX_EN_PIN_RIGHT A15
 
-#define DISCHARGE_PIN B3
-#define DISCHARGE_PIN_RIGHT D7
+#define DISCHARGE_PIN A6
+#define DISCHARGE_PIN_RIGHT B4
 
-#define ANALOG_PORT F6
+#define ANALOG_PORT B1 
 
-#define SPLIT_HAND_PIN D2
+#define SPLIT_HAND_PIN A3 
+
+
+#define SERIAL_DRIVER usart
 #define SERIAL_USART_TX_PIN D3
+#define SERIAL_USART_DRIVER SD2
+#define SERIAL_USART_HALF_DUPLEX
 
-#define POWER_PIN B1
-#define POWER_PIN_RIGHT C6
+#define POWER_PIN A5
+#define POWER_PIN_RIGHT B3
