@@ -14,7 +14,7 @@
         "cols": ["A1", "B9", "B8", "B7", "B6", "B5", "B4", "B3", "A15", "A8"],
         "rows": ["B12", "B13", "B14", "B15"]
     },
-    "url": "",
+    "url": "https://github.com/Haxmat",
     "usb": {
         "device_version": "1.0.0",
         "pid": "0x0000",
