@@ -1,7 +1,7 @@
 {
-    "manufacturer": "ssbb",
-    "keyboard_name": "Tako",
-    "maintainer": "ssbb",
+    "manufacturer": "Haxmat",
+    "keyboard_name": "Ortho34EC",
+    "maintainer": "Haxmat",
     "url": "https://github.com/ssbb/tako",
     "usb": {
         "device_version": "0.0.1",
@@ -14,12 +14,12 @@
     "features": {
         "audio": false,
         "backlight": false,
-        "bootmagic": false,
+        "bootmagic": true,
         "command": false,
         "console": true,
         "extrakey": true,
         "mousekey": true,
-        "nkro": true,
+        "nkro": false,
         "rgblight": false,
         "oled": false
     },

@@ -14,6 +14,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+
 #pragma once
 
 #define CONSOLE_ENABLED
@@ -43,7 +45,7 @@
 #define DIODE_DIRECTION COL2ROW
 
 #define DYNAMIC_KEYMAP_LAYER_COUNT 8
-#define VIAL_KEYBOARD_UID {0x64, 0x70, 0x69, 0x46, 0xB0, 0x10, 0x7F, 0xC9}
+#define VIAL_KEYBOARD_UID {0x93, 0xD0, 0xA3, 0x3E, 0xF3, 0x45, 0x38, 0xB5}
 
 // Calibration:
 // Baseline read - what you see in console when keyboard IDLE.

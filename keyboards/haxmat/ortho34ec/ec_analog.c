@@ -22,7 +22,7 @@
 #    error "You need to set HAL_USE_ADC to TRUE in your halconf.h to use the ADC."
 #endif
 
-#if !RP_ADC_USE_ADC1 && !STM32_ADC_USE_ADC1 && !STM32_ADC_USE_ADC2 && !STM32_ADC_USE_ADC3 && !STM32_ADC_USE_ADC4 && !WB32_ADC_USE_ADC1
+#if !RP_ADC_USE_ADC1 && !STM32_ADC_USE_ADC1 && !STM32_ADC_USE_ADC2 && !STM32_ADC_USE_ADC3 && !STM32_ADC_USE_ADC4 && !WB32_ADC_USE_ADC1 && !AT32_ADC_USE_ADC1
 #    error "You need to set one of the 'xxx_ADC_USE_ADCx' settings to TRUE in your mcuconf.h to use the ADC."
 #endif
 
@@ -37,7 +37,7 @@
 // Otherwise assume V3
 #if defined(STM32F0XX) || defined(STM32L0XX)
 #    define USE_ADCV1
-#elif defined(STM32F1XX) || defined(STM32F2XX) || defined(STM32F4XX) || defined(GD32VF103) || defined(WB32F3G71xx) || defined(WB32FQ95xx)
+#elif defined(STM32F1XX) || defined(STM32F2XX) || defined(STM32F4XX) || defined(GD32VF103) || defined(WB32F3G71xx) || defined(WB32FQ95xx) || defined(AT32F415)
 #    define USE_ADCV2
 #endif
 
@@ -76,7 +76,7 @@
 
 /* User configurable ADC options */
 #ifndef ADC_COUNT
-#    if defined(RP2040) || defined(STM32F0XX) || defined(STM32F1XX) || defined(STM32F4XX) || defined(GD32VF103) || defined(WB32F3G71xx) || defined(WB32FQ95xx)
+#    if defined(RP2040) || defined(STM32F0XX) || defined(STM32F1XX) || defined(STM32F4XX) || defined(GD32VF103) || defined(WB32F3G71xx) || defined(WB32FQ95xx) || defined(AT32F415)
 #        define ADC_COUNT 1
 #    elif defined(STM32F3XX)
 #        define ADC_COUNT 4
@@ -222,7 +222,7 @@ __attribute__((weak)) adc_mux pinToMux(pin_t pin) {
         case PAL_LINE(GPIOF, 9):  return TO_MUX( ADC_CHANNEL_IN7,  2 );
         case PAL_LINE(GPIOF, 10): return TO_MUX( ADC_CHANNEL_IN8,  2 );
 #    endif
-#elif defined(STM32F1XX) || defined(GD32VF103) || defined(WB32F3G71xx) || defined(WB32FQ95xx)
+#elif defined(STM32F1XX) || defined(GD32VF103) || defined(WB32F3G71xx) || defined(WB32FQ95xx) || defined(AT32F415)
         case PAL_LINE(GPIOA, 0):  return TO_MUX( ADC_CHANNEL_IN0,  0 );
         case PAL_LINE(GPIOA, 1):  return TO_MUX( ADC_CHANNEL_IN1,  0 );
         case PAL_LINE(GPIOA, 2):  return TO_MUX( ADC_CHANNEL_IN2,  0 );
@@ -256,7 +256,7 @@ __attribute__((weak)) adc_mux pinToMux(pin_t pin) {
 
 static inline ADCDriver* intToADCDriver(uint8_t adcInt) {
     switch (adcInt) {
-#if RP_ADC_USE_ADC1 || STM32_ADC_USE_ADC1 || WB32_ADC_USE_ADC1
+#if RP_ADC_USE_ADC1 || STM32_ADC_USE_ADC1 || WB32_ADC_USE_ADC1 || AT32_ADC_USE_ADC1
         case 0:
             return &ADCD1;
 #endif

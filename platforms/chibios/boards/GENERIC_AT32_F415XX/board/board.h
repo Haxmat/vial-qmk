@@ -52,10 +52,10 @@
 /*
  * GPIO settings, allow unused GPIO for smaller chip packages.
  */
-#if defined(AT32F415KB) || defined(AT32F415KC)
-#define AT32_HAS_GPIOC              TRUE
-#define AT32_HAS_GPIOF              TRUE
-#endif
+//#if defined(AT32F415KB) || defined(AT32F415KC)
+//#define AT32_HAS_GPIOC              TRUE
+//#define AT32_HAS_GPIOF              TRUE
+//#endif
 
 /*
  * IO pins assignments.

@@ -31,6 +31,7 @@
 
 #define WAIT_DISCHARGE()
 #define WAIT_CHARGE()
+#define WAIT_MUX_SETTLE() wait_us(2)
 
 /* Pin and port array */
 pin_t row_pins[]     = MATRIX_ROW_PINS;
@@ -49,7 +50,7 @@ static int16_t       ecsm_sw_value[MATRIX_ROWS][MATRIX_COLS];
 static adc_mux adcMux;
 
 static inline void init_mux_sel(void) {
-    for (int idx = 0; idx < 3; idx++) {
+    for (int idx = 0; idx < 4; idx++) {
         setPinOutput(mux_sel_pins[idx]);
     }
 }
@@ -117,6 +118,7 @@ int16_t ecsm_readkey_raw(uint8_t row, uint8_t col) {
 
     writePinHigh(aplex_en_pin);
     select_mux(col);
+    WAIT_MUX_SETTLE();
     writePinLow(aplex_en_pin);
 
     // Set strobe pins to low state

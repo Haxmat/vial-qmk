@@ -130,7 +130,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case DUMP_EC_THRESHOLDS:
             if (record->event.pressed) {
-
                 uprintf("\n\n// ====== COPY FROM HERE (200x NATURALLY AVERAGED) ======\n\n");
                 if(!isLeftHand) {
                     print_ec_threshold_sub_matrix("EC_HIGH_THRESHOLD_RIGHT",  true,  0, 4);

@@ -1,0 +1,2 @@
+BOOTLOADER = tinyuf2
+LTO_ENABLE = yes

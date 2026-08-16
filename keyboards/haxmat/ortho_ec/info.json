@@ -5,7 +5,7 @@
     "url": "https://github.com/ssbb/tako",
     "usb": {
         "device_version": "0.0.1",
-        "vid": "0xECBB",
+        "vid": "0xFEED",
         "pid": "0xEC01",
         "shared_endpoint": {
             "keyboard": true
