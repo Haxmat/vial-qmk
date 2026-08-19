@@ -16,7 +16,7 @@
  */
 
 #include "matrix.h"
-#include "ec_switch_matrix.h"
+#include "../ec_switch_matrix.h"
 
 uint16_t low_threshold[MATRIX_ROWS][MATRIX_COLS]  = EC_LOW_THRESHOLD;
 uint16_t high_threshold[MATRIX_ROWS][MATRIX_COLS] = EC_HIGH_THRESHOLD;

@@ -45,7 +45,9 @@
 
 #define SPLIT_HAND_PIN_ACTIVE_LOW false
 
-#define SERIAL_USART_TX_PIN D3
+// #define SERIAL_USART_TX_PIN D3
+#define SOFT_SERIAL_PIN D3
+
 
 #define POWER_PIN B1
 #define POWER_PIN_RIGHT C6
@@ -57,8 +59,8 @@
 
 #define DIODE_DIRECTION COL2ROW
 
-#define DYNAMIC_KEYMAP_LAYER_COUNT 8
-#define VIAL_KEYBOARD_UID {0xE4, 0xAC, 0x25, 0x4A, 0x1A, 0x1A, 0xDA, 0xEE}
+// #define DYNAMIC_KEYMAP_LAYER_COUNT 8
+// #define VIAL_KEYBOARD_UID {0xE4, 0xAC, 0x25, 0x4A, 0x1A, 0x1A, 0xDA, 0xEE}
 
 // Calibration:
 // Baseline read - what you see in console when keyboard IDLE.
