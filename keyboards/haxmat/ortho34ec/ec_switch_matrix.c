@@ -82,10 +82,11 @@ int ecsm_init(ecsm_config_t const* const ecsm_config) {
     setPinOutput(power_pin);
     writePinHigh(power_pin);
 
+    // analogReadPin(ANALOG_PORT);
     adcMux = pinToMux(ANALOG_PORT);
     ec_adc_read(adcMux, true);
 
-    writePinLow(discharge_pin);
+writePinLow(discharge_pin);
 
 #if SUPPORTS_OPEN_DRAIN
     setPinOutputOpenDrain(discharge_pin);
@@ -133,6 +134,8 @@ int16_t ecsm_readkey_raw(uint8_t row, uint8_t col) {
         writePinHigh(row_pins[row]);
 
         WAIT_CHARGE();
+
+        // sw_value = analogReadPin(ANALOG_PORT);
 
         sw_value = ec_adc_read(adcMux, false);
     }
