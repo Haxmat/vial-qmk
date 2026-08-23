@@ -1,0 +1,95 @@
+{
+    "keyboard_name": "Sweep High HE",
+    "maintainer": "haxmat",
+    "manufacturer": "haxmat",
+    "url": "https://github.com/Haxmat",
+    "bootloader": "rp2040",
+    "processor": "RP2040",
+    "usb": {
+        "device_version": "1.0.0",
+        "pid": "0x0010",
+        "vid": "0xFEED"
+    },
+    "features": {
+        "bootmagic": true,
+        "extrakey": true,
+        "mousekey": true,
+        "command": false,
+        "console": true,
+        "nkro": true
+    },
+    "matrix_size": {
+        "rows": 6,
+        "cols": 8
+    },
+    "bootmagic": {
+        "enabled": true,
+        "matrix": [ 0, 4 ]
+    },
+    "split": {
+        "enabled": true,
+        "bootmagic": {
+            "matrix": [ 3, 4 ]
+        },
+        "serial": {
+            "driver": "vendor",
+            "pin": "GP0"
+        },
+        "transport": {
+            "sync": {
+                "matrix_state": true
+            }
+        }
+    },
+    "layout_aliases": {
+        "LAYOUT": "LAYOUT_split_3x5_2"
+    },
+    "community_layouts": [ "split_3x5_2" ],
+    "layouts": {
+        "LAYOUT_split_3x5_2": {
+            "layout": [
+                {"matrix": [0, 4], "x": 0, "y": 0.75},
+                {"matrix": [0, 6], "x": 1, "y": 0.25},
+                {"matrix": [0, 2], "x": 2, "y": 0},
+                {"matrix": [0, 3], "x": 3, "y": 0.25},
+                {"matrix": [0, 5], "x": 4, "y": 0.25},
+
+                {"matrix": [3, 5], "x": 7, "y": 0.25},
+                {"matrix": [3, 3], "x": 8, "y": 0.25},
+                {"matrix": [3, 2], "x": 9, "y": 0},
+                {"matrix": [3, 6], "x": 10, "y": 0.25},
+                {"matrix": [3, 4], "x": 11, "y": 0.75},
+
+                {"matrix": [0, 7], "x": 0, "y": 1.75},
+                {"matrix": [1, 0], "x": 1, "y": 1.75},
+                {"matrix": [1, 1], "x": 2, "y": 1.75},
+                {"matrix": [1, 6], "x": 3, "y": 1.75},
+                {"matrix": [1, 7], "x": 4, "y": 1.75},
+
+                {"matrix": [4, 7], "x": 7, "y": 1.75},
+                {"matrix": [4, 6], "x": 8, "y": 1.75},
+                {"matrix": [4, 1], "x": 9, "y": 1.75},
+                {"matrix": [4, 0], "x": 10, "y": 1.75},
+                {"matrix": [3, 7], "x": 11, "y": 1.75},
+
+                {"matrix": [1, 5], "x": 0, "y": 2.75},
+                {"matrix": [2, 6], "x": 1, "y": 2.75},
+                {"matrix": [2, 4], "x": 2, "y": 2.75},
+                {"matrix": [2, 2], "x": 3, "y": 2.75},
+                {"matrix": [2, 3], "x": 4, "y": 2.75},
+
+                {"matrix": [5, 3], "x": 7, "y": 2.75},
+                {"matrix": [5, 2], "x": 8, "y": 2.75},
+                {"matrix": [5, 4], "x": 9, "y": 2.75},
+                {"matrix": [5, 6], "x": 10, "y": 2.75},
+                {"matrix": [4, 5], "x": 11, "y": 2.75},
+
+                {"matrix": [2, 7], "x": 2.5, "y": 3.5},
+                {"matrix": [2, 5], "x": 3.5, "y": 3.5},
+
+                {"matrix": [5, 5], "x": 6.5, "y": 3.5},
+                {"matrix": [5, 7], "x": 7.5, "y": 3.5}
+            ]
+        }
+    }
+}

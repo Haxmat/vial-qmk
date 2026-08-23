@@ -2,6 +2,12 @@
 #define MATRIX_COLS 10
 #define EC_DEBUG true
 
+
+#define TAPPING_TERM 185
+#define FLOW_TAP 0
+#define QUICK_TAP_TERM 0
+#define COMBO_TERM 50
+
 #define DIODE_DIRECTION COL2ROW
 
 #define DYNAMIC_KEYMAP_LAYER_COUNT 8
