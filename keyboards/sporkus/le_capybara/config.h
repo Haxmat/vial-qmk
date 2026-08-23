@@ -46,14 +46,14 @@
 
 // The following two options are for disabling the front leds if they're installed.
 // Comment these out to disable them. 
-#define RGB_MODS_INDICATOR_ENABLE
-#define RGB_LAYER_INDICATOR_ENABLE
+//#define RGB_MODS_INDICATOR_ENABLE
+//#define RGB_LAYER_INDICATOR_ENABLE
 
-#define RGB_FRONT_BRIGHTNESS_SCALE 3  // Front indicator brightness scaling (0-10)
+#define RGB_FRONT_BRIGHTNESS_SCALE 0  // Front indicator brightness scaling (0-10)
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 #define RGB_MATRIX_KEYPRESSES
 #define RGB_TRIGGER_ON_KEYDOWN
-#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 255
+#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 50
 #define RGB_MATRIX_HUE_STEP 8
 #define RGB_MATRIX_SAT_STEP 8
 #define RGB_MATRIX_VAL_STEP 16
