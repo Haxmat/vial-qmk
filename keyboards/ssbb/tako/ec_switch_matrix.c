@@ -213,7 +213,7 @@ bool ecsm_matrix_scan(matrix_row_t current_matrix[]) {
 
                 accumulator += ecsm_readkey_raw(row, col);
             }
-            ecsm_sw_value[row][col] = accumulator / 4;
+            ecsm_sw_value[row][col] = accumulator / SAMPLES;
             // ecsm_sw_value[row][col] = ecsm_readkey_raw(row, col);
             updated |= ecsm_update_key(&current_matrix[row], row, col, ecsm_sw_value[row][col]);
         }
