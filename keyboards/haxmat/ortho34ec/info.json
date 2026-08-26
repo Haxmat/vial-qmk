@@ -15,6 +15,5 @@
     },
     "layout_aliases": {
         "LAYOUT": "LAYOUT_split_3x5_2"
-    },
-    "community_layouts": ["LAYOUT_split_3x5_2"]
+    }
 }

@@ -137,7 +137,7 @@ int16_t ecsm_readkey_raw(uint8_t row, uint8_t col) {
 
         sw_value = analogReadPin(ANALOG_PORT);
 
-        // sw_value = ec_adc_read(adcMux, false);
+        //sw_value = ec_adc_read(adcMux, false);
     }
 
     // Discharge peak hold capacitor
@@ -174,17 +174,17 @@ bool ecsm_update_key(matrix_row_t* current_row, uint8_t row, uint8_t col, uint16
 // Scan key values and update matrix state
 bool ecsm_matrix_scan(matrix_row_t current_matrix[]) {
     bool updated = false;
-    // uint8_t SAMPLES = 4;
+    uint8_t SAMPLES = 2;
     
     for (int col = 0; col < cols_len; col++) {
         for (int row = 0; row < rows_len; row++) {
-            // uint32_t accumulator = 0;
-            // for (uint8_t i = 0; i < SAMPLES; i++) {
+            uint32_t accumulator = 0;
+            for (uint8_t i = 0; i < SAMPLES; i++) {
 
-            //     accumulator += ecsm_readkey_raw(row, col);
-            // }
-            // ecsm_sw_value[row][col] = accumulator / SAMPLES;
-            ecsm_sw_value[row][col] = ecsm_readkey_raw(row, col);
+                 accumulator += ecsm_readkey_raw(row, col);
+            }
+            ecsm_sw_value[row][col] = accumulator / SAMPLES;
+            // ecsm_sw_value[row][col] = ecsm_readkey_raw(row, col);
             updated |= ecsm_update_key(&current_matrix[row], row, col, ecsm_sw_value[row][col]);
         }
     }
@@ -207,5 +207,5 @@ void ecsm_print_matrix(void) {
 }
 
 int16_t get_ecsm_sw_value(uint8_t row, uint8_t col) {
-    return ecsm_sw_value[row][col];
+    return ecsm_readkey_raw(row, col);
 }

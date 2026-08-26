@@ -24,7 +24,7 @@
     { D4, C6, D7, B2 }
 
 #define MATRIX_COL_CHANNELS \
-    { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+    { 6, 5, 4, 3, 2, 1, 12, 11, 10, 9}
 
 #define MUX_SEL_PINS \
     { F4, F5, F7, B5 }
@@ -43,32 +43,3 @@
 #define EC_DEBUG true
 
 #define DIODE_DIRECTION COL2ROW
-
-#define DYNAMIC_KEYMAP_LAYER_COUNT 8
-#define VIAL_KEYBOARD_UID {0x93, 0xD0, 0xA3, 0x3E, 0xF3, 0x45, 0x38, 0xB5}
-
-// Calibration:
-// Baseline read - what you see in console when keyboard IDLE.
-//
-// EC_LOW_THRESHOLD[][] = BASELINE_READ + 100
-// EC_HIGH_THRESHOLD[][] = HIGH_THRESHOLD + 300
-//
-// You could change 300 to something else to adjust actuation depth.
-
-// clang-format off
- 
- #define EC_HIGH_THRESHOLD { \
-     { 535, 701, 792, 645, 583, 535, 701, 792, 645, 583 }, \
-     { 707, 890, 796, 807, 727, 535, 701, 792, 645, 583 }, \
-     { 749, 593, 697, 570, 822, 535, 701, 792, 645, 583 }, \
-     { 937, 906, 578, 578, 574, 535, 701, 792, 645, 583 }  \
- }
- 
- #define EC_LOW_THRESHOLD { \
-     { 335, 501, 592, 445, 383, 335, 501, 592, 445, 383 }, \
-     { 507, 690, 596, 607, 527, 335, 501, 592, 445, 383 }, \
-     { 549, 393, 497, 370, 622, 335, 501, 592, 445, 383 }, \
-     { 737, 706, 378, 378, 374, 335, 501, 592, 445, 383 }  \
- }
-
- // clang-format on

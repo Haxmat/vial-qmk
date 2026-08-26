@@ -1,5 +1,7 @@
 #include QMK_KEYBOARD_H
 #include "ec_switch_matrix.h"
+#include "deferred_exec.h"
+
 
 // Define Layer Names
 enum layers {
@@ -122,7 +124,7 @@ void print_ec_threshold_sub_matrix(const char* label, bool is_high_threshold, ui
             // Calculate final thresholds based on your standard formulas
             int16_t final_val = averaged_baseline + 100; // Low threshold formula
             if (is_high_threshold) {
-                final_val += 200; // High threshold formula
+                final_val += 100; // High threshold formula
             }
             
             uprintf("%d", final_val);
@@ -139,18 +141,22 @@ void print_ec_threshold_sub_matrix(const char* label, bool is_high_threshold, ui
     uprintf("}\n\n");
 }
 
+uint32_t run_calibration_deferred(uint32_t trigger_time, void *cb_arg) {
+
+    uprintf("\n\n// ====== COPY FROM HERE (200x NATURALLY AVERAGED) ======\n\n");
+    print_ec_threshold_sub_matrix("EC_HIGH_THRESHOLD",  true,  0, 4);
+    print_ec_threshold_sub_matrix("EC_LOW_THRESHOLD",  false,  0, 4);
+    uprintf("// ====== END COPY ======\n\n");
+    return 0;               // 0 = do not reschedule
+}
+
+
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case DUMP_EC_THRESHOLDS:
             if (record->event.pressed) {
-
-                uprintf("\n\n// ====== COPY FROM HERE (200x NATURALLY AVERAGED) ======\n\n");
-
-                
-                print_ec_threshold_sub_matrix("EC_HIGH_THRESHOLD_LEFT",  true,  0, 4);
-                print_ec_threshold_sub_matrix("EC_LOW_THRESHOLD_LEFT",   false, 0, 4);
-                
-                uprintf("// ====== END COPY ======\n\n");
+                defer_exec(45, run_calibration_deferred, NULL);
             }
             return false;
         default:
