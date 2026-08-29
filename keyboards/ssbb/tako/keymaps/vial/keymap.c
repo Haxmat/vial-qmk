@@ -59,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_MEDIA] = LAYOUT(
-        KC_SLEP,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   _______,   _______,   _______,   _______,   _______,
+        _______,   _______,   _______,   _______,   DUMP_EC_THRESHOLDS,   _______,   _______,   _______,   _______,   _______,
         KC_MPRV,   KC_VOLD,   KC_MUTE,   KC_VOLU,   KC_MNXT,   KC_MPRV,   KC_VOLD,   KC_MUTE,   KC_VOLU,   KC_MNXT,
         _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,
                               _______,   _______,   KC_MSTP,   KC_MPLY
@@ -95,20 +95,16 @@ void print_ec_threshold_sub_matrix(const char* label, bool is_high_threshold, ui
             
             int32_t baseline_accumulator = 0;
             
-            // Loop 50 times, letting the native matrix scan fill the array naturally
             for (uint8_t i = 0; i < 200; i++) {
                 baseline_accumulator += get_ecsm_sw_value(r, c);
                 
-                // Pause for 2ms to guarantee the background keyboard loop 
-                // has completed a full hardware scan pass and discharged the sensors
                 wait_ms(2); 
             }
             int16_t averaged_baseline = baseline_accumulator / 200;
             
-            // Calculate final thresholds based on your standard formulas
-            int16_t final_val = averaged_baseline + 150; // Low threshold formula
+            int16_t final_val = averaged_baseline + 150;
             if (is_high_threshold) {
-                final_val += 150; // High threshold formula
+                final_val += 150;
             }
             
             uprintf("%d", final_val);
