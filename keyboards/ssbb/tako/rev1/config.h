@@ -2,6 +2,8 @@
 
 #define CONSOLE_ENABLED
 
+#define STM32_HSECLK 8000000U
+
 #define MATRIX_ROW_PINS \
     { A15, B3, B4, A7 }
 #define MATRIX_ROW_PINS_RIGHT \

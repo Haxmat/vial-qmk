@@ -31,9 +31,11 @@ int16_t get_ecsm_sw_value(uint8_t row, uint8_t col);
 #define BASE_O MT(MOD_LGUI, KC_O)
 
 #define LT_TAB  LT(_NAV, KC_TAB)
-#define LT_SPC  LT(_MEDIA, KC_SPC)
+#define LT_SPC  LT(_MOUSE, KC_SPC)
+#define LT_ESC LT(_MEDIA, KC_ESC)
 #define LT_ENT  LT(_SYM, KC_ENT)
 #define LT_BSPC LT(_NUM, KC_BSPC)
+#define LT_DEL LT(_FUN, KC_DEL)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -41,7 +43,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_NO, KC_Q,      KC_W,      KC_F,      KC_P,      KC_B,      KC_J,      KC_L,      KC_U,      KC_Y,      KC_QUOT, KC_NO,
         KC_NO, BASE_A,    BASE_R,    BASE_S,    BASE_T,    KC_G,      KC_M,      BASE_N,    BASE_E,    BASE_I,    BASE_O,  KC_NO,
         KC_NO, KC_Z,      KC_X,      KC_C,      KC_D,      KC_V,      KC_K,      KC_H,      KC_COMM,   KC_DOT,    KC_SLSH, KC_NO,
-                              KC_NO, LT_TAB,    LT_SPC,    LT_ENT,    LT_BSPC, KC_NO
+                              LT_ESC, LT_TAB,    LT_SPC,    LT_ENT,    LT_BSPC, LT_DEL
     ),
 
     [_NAV] = LAYOUT(
@@ -59,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_MEDIA] = LAYOUT(
-        _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,
+        _______,   _______,   _______,   _______,   DUMP_EC_THRESHOLDS,   _______,   _______,   _______,   _______,   _______,   _______,   _______,
         _______,   KC_MPRV,   KC_VOLD,   KC_MUTE,   KC_VOLU,   KC_MNXT,   KC_MPRV,   KC_VOLD,   KC_MUTE,   KC_VOLU,   KC_MNXT,   _______,
         _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,
                               _______,   _______,   _______,   KC_MSTP,   KC_MPLY,   _______
@@ -95,17 +97,13 @@ void print_ec_threshold_sub_matrix(const char* label, bool is_high_threshold, ui
             
             int32_t baseline_accumulator = 0;
             
-            // Loop 50 times, letting the native matrix scan fill the array naturally
             for (uint8_t i = 0; i < 200; i++) {
                 baseline_accumulator += get_ecsm_sw_value(r, c);
                 
-                // Pause for 2ms to guarantee the background keyboard loop 
-                // has completed a full hardware scan pass and discharged the sensors
                 wait_ms(2); 
             }
             int16_t averaged_baseline = baseline_accumulator / 200;
             
-            // Calculate final thresholds based on your standard formulas
             int16_t final_val = averaged_baseline + 100; // Low threshold formula
             if (is_high_threshold) {
                 final_val += 200; // High threshold formula

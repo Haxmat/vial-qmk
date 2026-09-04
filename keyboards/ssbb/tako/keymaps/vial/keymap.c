@@ -30,8 +30,8 @@ int16_t get_ecsm_sw_value(uint8_t row, uint8_t col);
 #define BASE_I MT(MOD_LALT, KC_I)
 #define BASE_O MT(MOD_LGUI, KC_O)
 
-#define LT_TAB  LT(_NAV, KC_TAB)
-#define LT_SPC  LT(_MEDIA, KC_SPC)
+#define LT_TAB  LT(_MEDIA, KC_TAB)
+#define LT_SPC  LT(_NAV, KC_SPC)
 #define LT_ENT  LT(_SYM, KC_ENT)
 #define LT_BSPC LT(_NUM, KC_BSPC)
 
