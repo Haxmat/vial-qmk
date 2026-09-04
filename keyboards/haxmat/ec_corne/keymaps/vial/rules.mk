@@ -1,0 +1,4 @@
+VIA_ENABLE = yes
+VIAL_ENABLE = yes
+VIAL_INSECURE = yes
+SERIAL_DRIVER = vendor
