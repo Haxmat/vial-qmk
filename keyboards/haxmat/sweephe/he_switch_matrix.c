@@ -112,7 +112,8 @@ bool he_matrix_scan(matrix_row_t current_matrix[]) {
 uint16_t he_readkey_raw(uint8_t row) {
     uint16_t sw_value = 0;
     sw_value = adc_read(adcMux[row]);
-    return 1023 - sw_value;
+    
+    return (sw_value >= 1023) ? 0 : (1023 - sw_value);
 }
 
 bool he_update_key(matrix_row_t* current_row, uint8_t row, uint8_t col, uint16_t sw_value) {
@@ -252,28 +253,14 @@ void he_apply_key_to_all(uint8_t row, uint8_t col) {
     uint8_t  m1_act = he_config.per_key_mode_1_actuation_offset[row][col];
     uint8_t  m1_rel = he_config.per_key_mode_1_release_offset[row][col];
     uint16_t bdz   = he_config.per_key_bottom_deadzone[row][col];
-    uint16_t src_travel = he_config.noise_ceiling[row][col] - he_config.bottoming_reading[row][col];
     for (uint8_t r = 0; r < HE_MATRIX_ROWS; r++) {
         for (uint8_t c = 0; c < MATRIX_COLS; c++) {
             he_config.per_key_mode_0_actuation_threshold[r][c] = m0_act;
             he_config.per_key_mode_0_release_threshold[r][c] = m0_rel;
             he_config.per_key_mode_1_initial_deadzone[r][c] = m1_dz;
+            he_config.per_key_mode_1_actuation_offset[r][c] = m1_act;
+            he_config.per_key_mode_1_release_offset[r][c] = m1_rel;
             he_config.per_key_bottom_deadzone[r][c] = bdz;
-            if (src_travel > 0) {
-                uint16_t tgt_travel = he_config.noise_ceiling[r][c] - he_config.bottoming_reading[r][c];
-                if (tgt_travel > 0) {
-                    uint32_t new_act = (uint32_t)m1_act * tgt_travel / src_travel;
-                    uint32_t new_rel = (uint32_t)m1_rel * tgt_travel / src_travel;
-                    he_config.per_key_mode_1_actuation_offset[r][c] = (uint8_t)(new_act > 255 ? 255 : (new_act < 1 ? 1 : new_act));
-                    he_config.per_key_mode_1_release_offset[r][c] = (uint8_t)(new_rel > 255 ? 255 : (new_rel < 1 ? 1 : new_rel));
-                } else {
-                    he_config.per_key_mode_1_actuation_offset[r][c] = m1_act;
-                    he_config.per_key_mode_1_release_offset[r][c] = m1_rel;
-                }
-            } else {
-                he_config.per_key_mode_1_actuation_offset[r][c] = m1_act;
-                he_config.per_key_mode_1_release_offset[r][c] = m1_rel;
-            }
         }
     }
     he_rescale_values(0);

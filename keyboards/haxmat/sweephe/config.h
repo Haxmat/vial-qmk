@@ -1,24 +1,21 @@
-
 #pragma once
 
-#define EE_HANDS
-
 #define HE_MATRIX_ROWS 3 // Rows per half
-#define MATRIX_COLS 8 // Columns per half
+#define MATRIX_COLS 7 // Columns per half
 
 #define MATRIX_ROW_PINS \
     { GP29, GP28, GP27 }
 
 #define ROWS_PER_COL \
-    { 3, 3, 3, 3, 3, 3, 3, 3 }
+    { 3, 3, 3, 3, 3, 3, 3 }
 
-#define AMUX_MAX_COLS_COUNT 8
+#define AMUX_MAX_COLS_COUNT 7
 
 #define AMUX_SEL_PINS \
     { GP26, GP22, GP20 }
 
 #define AMUX_COL_CHANNELS \
-    { 0, 1, 2, 3, 4, 5, 6, 7 }
+    { 5, 7, 6, 4, 3, 0, 1 }
 
 #define DEFAULT_ACTUATION_MODE 0
 // "Light" preset based on 480-330 sensor range (~150 counts travel):
@@ -37,7 +34,7 @@
 #define DEFAULT_BOTTOMING_READING 0
 #define DEFAULT_CALIBRATION_STARTER true
 
-#define EECONFIG_KB_DATA_SIZE 289
+#define EECONFIG_KB_DATA_SIZE 253
 
 #define VIA_CUSTOM_LIGHTING_ENABLE
 

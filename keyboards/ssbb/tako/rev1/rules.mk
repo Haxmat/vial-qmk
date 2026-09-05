@@ -3,3 +3,5 @@ ifeq ($(strip $(MCU_FAMILY)),RP)
 else ifeq ($(strip $(MCU_FAMILY)),STM32)
 	SERIAL_DRIVER = usart
 endif
+
+SERIAL_DRIVER = bitbang
