@@ -22,7 +22,7 @@
 #include "print.h"
 #include "wait.h"
 #include "split_common/split_util.h"
-//#include "ec_analog.h"
+#include "ec_analog.h"
 
 #if defined(MCU_RP)
 #    include "hardware/gpio.h"
@@ -47,7 +47,7 @@ const int cols_len = sizeof col_channels / sizeof col_channels[0];
 static ecsm_config_t config;
 static int16_t       ecsm_sw_value[MATRIX_ROWS][MATRIX_COLS];
 
-//static adc_mux adcMux;
+static adc_mux adcMux;
 
 static inline void init_mux_sel(void) {
     for (int idx = 0; idx < 3; idx++) {
@@ -116,9 +116,8 @@ int ecsm_init(ecsm_config_t const* const ecsm_config) {
     setPinOutput(power_pin);
     writePinHigh(power_pin);
 
-    //adcMux = pinToMux(ANALOG_PORT);
-    //ec_adc_read(adcMux, true);
-    analogReadPin(ANALOG_PORT);
+    adcMux = pinToMux(ANALOG_PORT);
+    ec_adc_read(adcMux, true);
 
     writePinLow(discharge_pin);
 
@@ -168,8 +167,7 @@ int16_t ecsm_readkey_raw(uint8_t row, uint8_t col) {
 
         WAIT_CHARGE();
 
-        //sw_value = ec_adc_read(adcMux, false);
-        sw_value = analogReadPin(ANALOG_PORT);
+        sw_value = ec_adc_read(adcMux, false);
     }
 
     // Discharge peak hold capacitor
@@ -221,6 +219,7 @@ bool ecsm_matrix_scan(matrix_row_t current_matrix[]) {
 
     return updated;
 }
+
 
 // Debug print key values
 void ecsm_print_matrix(void) {

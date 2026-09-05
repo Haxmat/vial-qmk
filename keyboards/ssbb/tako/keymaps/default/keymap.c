@@ -30,10 +30,24 @@ int16_t get_ecsm_sw_value(uint8_t row, uint8_t col);
 #define BASE_I MT(MOD_LALT, KC_I)
 #define BASE_O MT(MOD_LGUI, KC_O)
 
-#define LT_TAB  LT(_NAV, KC_TAB)
-#define LT_SPC  LT(_MEDIA, KC_SPC)
+#define LT_TAB  LT(_MEDIA, KC_TAB)
+#define LT_SPC  LT(_NAV, KC_SPC)
 #define LT_ENT  LT(_SYM, KC_ENT)
 #define LT_BSPC LT(_NUM, KC_BSPC)
+
+const uint16_t PROGMEM basethumbleft [] = {LT_TAB, LT_SPC, COMBO_END};
+const uint16_t PROGMEM basethumbright [] = {LT_ENT, LT_BSPC, COMBO_END};
+const uint16_t PROGMEM mousethumbright [] = {KC_BTN1, KC_BTN2, COMBO_END};
+const uint16_t PROGMEM numthumbleft [] = {KC_DOT, KC_0, COMBO_END};
+const uint16_t PROGMEM symthumbleft [] = {KC_LPRN, KC_RPRN, COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(basethumbleft, LT(_MOUSE, KC_ESC)),
+    COMBO(basethumbright, LT(_FUN, KC_DEL)),
+    COMBO(mousethumbright, KC_BTN3),
+    COMBO(numthumbleft, KC_MINS),
+    COMBO(symthumbleft, S(KC_MINS)),
+};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -59,14 +73,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_MEDIA] = LAYOUT(
-        KC_SLEP,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   _______,   _______,   _______,   _______,   _______,
+        _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,
         KC_MPRV,   KC_VOLD,   KC_MUTE,   KC_VOLU,   KC_MNXT,   KC_MPRV,   KC_VOLD,   KC_MUTE,   KC_VOLU,   KC_MNXT,
         _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,
                               _______,   _______,   KC_MSTP,   KC_MPLY
     ),
 
     [_MOUSE] = LAYOUT(
-        _______,   _______,   _______,   _______,   _______,   KC_REDO,    KC_PSTE,   KC_COPY,   KC_CUT,    KC_UNDO,
+        _______,   _______,   _______,   _______,   DUMP_EC_THRESHOLDS,   KC_REDO,    KC_PSTE,   KC_COPY,   KC_CUT,    KC_UNDO,
         KC_LGUI,   KC_LALT,   KC_LCTL,   KC_LSFT,   _______,   _______,   KC_MS_L,   KC_MS_D,   KC_MS_U,   KC_MS_R,
         _______,   _______,   _______,   _______,   _______,   _______,   KC_WH_L,   KC_WH_D,   KC_WH_U,   KC_WH_R,
                               _______,   _______,   KC_BTN1,   KC_BTN2
@@ -106,9 +120,9 @@ void print_ec_threshold_sub_matrix(const char* label, bool is_high_threshold, ui
             int16_t averaged_baseline = baseline_accumulator / 200;
             
             // Calculate final thresholds based on your standard formulas
-            int16_t final_val = averaged_baseline + 100; // Low threshold formula
+            int16_t final_val = averaged_baseline + 90; // Low threshold formula
             if (is_high_threshold) {
-                final_val += 200; // High threshold formula
+                final_val += 70; // High threshold formula
             }
             
             uprintf("%d", final_val);
