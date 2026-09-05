@@ -104,9 +104,9 @@ void print_ec_threshold_sub_matrix(const char* label, bool is_high_threshold, ui
             }
             int16_t averaged_baseline = baseline_accumulator / 200;
             
-            int16_t final_val = averaged_baseline + 100; // Low threshold formula
+            int16_t final_val = averaged_baseline + 150; // Low threshold formula
             if (is_high_threshold) {
-                final_val += 200; // High threshold formula
+                final_val += 150; // High threshold formula
             }
             
             uprintf("%d", final_val);
