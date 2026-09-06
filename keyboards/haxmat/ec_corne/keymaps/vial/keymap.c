@@ -66,7 +66,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_MOUSE] = LAYOUT(
-        _______,   _______,   _______,   _______,   _______,   _______,   KC_REDO,    KC_PSTE,   KC_COPY,   KC_CUT,    KC_UNDO,   _______,
+        _______,   _______,   _______,   _______,   _______,   DUMP_EC_THRESHOLDS,   KC_REDO,    KC_PSTE,   KC_COPY,   KC_CUT,    KC_UNDO,   _______,
         _______,   KC_LGUI,   KC_LALT,   KC_LCTL,   KC_LSFT,   _______,   _______,   KC_MS_L,   KC_MS_D,   KC_MS_U,   KC_MS_R,   _______,
         _______,   _______,   _______,   _______,   _______,   _______,   _______,   KC_WH_L,   KC_WH_D,   KC_WH_U,   KC_WH_R,   _______,
                               _______,   _______,   _______,   KC_BTN1,   KC_BTN2,   _______
@@ -106,9 +106,9 @@ void print_ec_threshold_sub_matrix(const char* label, bool is_high_threshold, ui
             int16_t averaged_baseline = baseline_accumulator / 200;
             
             // Calculate final thresholds based on your standard formulas
-            int16_t final_val = averaged_baseline + 100; // Low threshold formula
+            int16_t final_val = averaged_baseline + 150; // Low threshold formula
             if (is_high_threshold) {
-                final_val += 200; // High threshold formula
+                final_val += 150; // High threshold formula
             }
             
             uprintf("%d", final_val);
