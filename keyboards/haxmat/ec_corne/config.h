@@ -44,6 +44,8 @@
 
 #define POWER_PIN B8
 
+#define OPA_SHUTDOWN B10
+
 
 #define MATRIX_ROWS 6
 #define MATRIX_COLS 7

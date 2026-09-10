@@ -40,6 +40,7 @@ pin_t mux_sel_pins[] = MUX_SEL_PINS;
 pin_t aplex_en_pin   = APLEX_EN_PIN;
 pin_t discharge_pin  = DISCHARGE_PIN;
 pin_t power_pin      = POWER_PIN;
+pin_t opa_shutdown   = OPA_SHUTDOWN;
 
 const int rows_len = sizeof row_pins / sizeof row_pins[0];
 const int cols_len = sizeof col_channels / sizeof col_channels[0];
@@ -80,6 +81,8 @@ int ecsm_init(ecsm_config_t const* const ecsm_config) {
 
     setPinOutput(power_pin);
     writePinHigh(power_pin);
+    setPinOutput(opa_shutdown);
+    writePinHigh(opa_shutdown);
 
     adcMux = pinToMux(ANALOG_PORT);
     ec_adc_read(adcMux, true);
