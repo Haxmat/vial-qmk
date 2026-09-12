@@ -1,5 +1,7 @@
 #include QMK_KEYBOARD_H
 #include "ec_switch_matrix.h"
+#include "deferred_exec.h"
+
 
 // Define Layer Names
 enum layers {
@@ -30,10 +32,24 @@ int16_t get_ecsm_sw_value(uint8_t row, uint8_t col);
 #define BASE_I MT(MOD_LALT, KC_I)
 #define BASE_O MT(MOD_LGUI, KC_O)
 
-#define LT_TAB  LT(_NAV, KC_TAB)
-#define LT_SPC  LT(_MEDIA, KC_SPC)
+#define LT_TAB  LT(_MEDIA, KC_TAB)
+#define LT_SPC  LT(_NAV, KC_SPC)
 #define LT_ENT  LT(_SYM, KC_ENT)
 #define LT_BSPC LT(_NUM, KC_BSPC)
+
+const uint16_t PROGMEM thumb_left_base[] = {LT_TAB, LT_SPC, COMBO_END};
+const uint16_t PROGMEM thumb_right_base[] = {LT_ENT, LT_BSPC, COMBO_END};
+const uint16_t PROGMEM thumb_left_num[] = {KC_DOT, KC_0, COMBO_END};
+const uint16_t PROGMEM thumb_left_sym[] = {KC_LPRN, KC_RPRN, COMBO_END};
+const uint16_t PROGMEM thumb_right_mouse[] = {KC_BTN1, KC_BTN2, COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(thumb_left_base, LT(_MOUSE, KC_ESC)),
+    COMBO(thumb_right_base, LT(_FUN, KC_DEL)),
+    COMBO(thumb_left_num, KC_MINS),
+    COMBO(thumb_left_sym, S(KC_MINS)),
+    COMBO(thumb_right_mouse, KC_BTN3),
+};
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -59,7 +75,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_MEDIA] = LAYOUT(
-        KC_SLEP,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   _______,   _______,   _______,   _______,   _______,
+        _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,
         KC_MPRV,   KC_VOLD,   KC_MUTE,   KC_VOLU,   KC_MNXT,   KC_MPRV,   KC_VOLD,   KC_MUTE,   KC_VOLU,   KC_MNXT,
         _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,   _______,
                               _______,   _______,   KC_MSTP,   KC_MPLY
@@ -106,7 +122,7 @@ void print_ec_threshold_sub_matrix(const char* label, bool is_high_threshold, ui
             int16_t averaged_baseline = baseline_accumulator / 200;
             
             // Calculate final thresholds based on your standard formulas
-            int16_t final_val = averaged_baseline + 100; // Low threshold formula
+            int16_t final_val = averaged_baseline + 175; // Low threshold formula
             if (is_high_threshold) {
                 final_val += 200; // High threshold formula
             }
@@ -125,18 +141,22 @@ void print_ec_threshold_sub_matrix(const char* label, bool is_high_threshold, ui
     uprintf("}\n\n");
 }
 
+uint32_t run_calibration_deferred(uint32_t trigger_time, void *cb_arg) {
+
+    uprintf("\n\n// ====== COPY FROM HERE (200x NATURALLY AVERAGED) ======\n\n");
+    print_ec_threshold_sub_matrix("EC_HIGH_THRESHOLD",  true,  0, 4);
+    print_ec_threshold_sub_matrix("EC_LOW_THRESHOLD",  false,  0, 4);
+    uprintf("// ====== END COPY ======\n\n");
+    return 0;               // 0 = do not reschedule
+}
+
+
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case DUMP_EC_THRESHOLDS:
             if (record->event.pressed) {
-
-                uprintf("\n\n// ====== COPY FROM HERE (200x NATURALLY AVERAGED) ======\n\n");
-
-                
-                print_ec_threshold_sub_matrix("EC_HIGH_THRESHOLD_LEFT",  true,  0, 4);
-                print_ec_threshold_sub_matrix("EC_LOW_THRESHOLD_LEFT",   false, 0, 4);
-                
-                uprintf("// ====== END COPY ======\n\n");
+                defer_exec(45, run_calibration_deferred, NULL);
             }
             return false;
         default:

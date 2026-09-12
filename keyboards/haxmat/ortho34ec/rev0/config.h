@@ -21,21 +21,21 @@
 #define CONSOLE_ENABLED
 
 #define MATRIX_ROW_PINS \
-    { D4, C6, D7, B2 }
+    { A15, B3, B4, A7 }
 
 #define MATRIX_COL_CHANNELS \
     { 6, 5, 4, 3, 2, 1, 12, 11, 10, 9}
 
 #define MUX_SEL_PINS \
-    { F4, F5, F7, B5 }
+    { B10, B2, B0, B9 }
 
-#define APLEX_EN_PIN B6
+#define APLEX_EN_PIN A4
 
-#define DISCHARGE_PIN B3
+#define DISCHARGE_PIN A6
 
-#define ANALOG_PORT F6
+#define ANALOG_PORT B1
 
-#define POWER_PIN B1
+#define POWER_PIN A5
 
 
 #define MATRIX_ROWS 4
