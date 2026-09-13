@@ -37,20 +37,6 @@ int16_t get_ecsm_sw_value(uint8_t row, uint8_t col);
 #define LT_ENT  LT(_SYM, KC_ENT)
 #define LT_BSPC LT(_NUM, KC_BSPC)
 
-const uint16_t PROGMEM thumb_left_base[] = {LT_TAB, LT_SPC, COMBO_END};
-const uint16_t PROGMEM thumb_right_base[] = {LT_ENT, LT_BSPC, COMBO_END};
-const uint16_t PROGMEM thumb_left_num[] = {KC_DOT, KC_0, COMBO_END};
-const uint16_t PROGMEM thumb_left_sym[] = {KC_LPRN, KC_RPRN, COMBO_END};
-const uint16_t PROGMEM thumb_right_mouse[] = {KC_BTN1, KC_BTN2, COMBO_END};
-
-combo_t key_combos[] = {
-    COMBO(thumb_left_base, LT(_MOUSE, KC_ESC)),
-    COMBO(thumb_right_base, LT(_FUN, KC_DEL)),
-    COMBO(thumb_left_num, KC_MINS),
-    COMBO(thumb_left_sym, S(KC_MINS)),
-    COMBO(thumb_right_mouse, KC_BTN3),
-};
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_BASE] = LAYOUT(

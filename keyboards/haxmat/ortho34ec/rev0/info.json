@@ -17,12 +17,12 @@
   "features": {
     "audio": false,
     "backlight": false,
-    "bootmagic": false,
-    "command": false,
+    "bootmagic": true,
+    "command": true,
     "console": true,
     "extrakey": true,
     "mousekey": true,
-    "nkro": false,
+    "nkro": true,
     "rgblight": false,
     "oled": false
   },
