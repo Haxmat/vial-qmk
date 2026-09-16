@@ -113,7 +113,7 @@ uint16_t he_readkey_raw(uint8_t row) {
     uint16_t sw_value = 0;
     sw_value = adc_read(adcMux[row]);
     
-    return (sw_value >= 1023) ? 0 : (1023 - sw_value);
+    return sw_value;
 }
 
 bool he_update_key(matrix_row_t* current_row, uint8_t row, uint8_t col, uint16_t sw_value) {

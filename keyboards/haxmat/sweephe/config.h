@@ -17,6 +17,8 @@
 #define AMUX_COL_CHANNELS \
     { 5, 7, 6, 4, 3, 0, 1 }
 
+#define SPLIT_HAND_PIN GP9
+
 #define DEFAULT_ACTUATION_MODE 0
 // "Light" preset based on 480-330 sensor range (~150 counts travel):
 // APC actuation at 30% travel, release at 20% travel (10% hysteresis)
